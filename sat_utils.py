@@ -108,7 +108,6 @@ def utm_from_latlon(lats, lons):
     proj_dst = pyproj.Proj("+proj=utm +zone={}{}".format(n, l))
     transformer = Transformer.from_proj(proj_src, proj_dst)
     easts, norths = transformer.transform(lons, lats)
-    #easts, norths = pyproj.transform(proj_src, proj_dst, lons, lats)
     return easts, norths
 
 def dsm_pointwise_diff(in_dsm_path, gt_dsm_path, dsm_metadata, gt_mask_path=None, out_rdsm_path=None, out_err_path=None):
@@ -137,7 +136,6 @@ def dsm_pointwise_diff(in_dsm_path, gt_dsm_path, dsm_metadata, gt_mask_path=None
     ds = gdal.Open(in_dsm_path)
     ds = gdal.Translate(pred_dsm_path, ds, projWin=[ulx, uly, lrx, lry])
     ds = None
-    # os.system("gdal_translate -projwin {} {} {} {} {} {}".format(ulx, uly, lrx, lry, source_path, crop_path))
     if gt_mask_path is not None:
         with rasterio.open(gt_mask_path, "r") as f:
             mask = f.read()[0, :, :]
@@ -212,7 +210,6 @@ def compute_mae_and_save_dsm_diff(pred_dsm_path, src_id, gt_dir, out_dir, epoch_
     rdsm_path = os.path.join(out_dir, "{}_rdsm_epoch{}.tif".format(src_id, epoch_number))
     diff = dsm_pointwise_diff(pred_dsm_path, gt_dsm_path, gt_roi_metadata, gt_mask_path=gt_seg_path,
                                        out_rdsm_path=rdsm_path, out_err_path=rdsm_diff_path)
-    #os.system(f"rm tmp*.tif.xml")
     if not save:
         os.remove(rdsm_diff_path)
         os.remove(rdsm_path)

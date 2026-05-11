@@ -4,7 +4,6 @@ This script defines the NeRF architecture
 
 import numpy as np
 import torch
-#from torch import nn
 
 def sine_init(m):
     with torch.no_grad():
@@ -60,7 +59,6 @@ class Mapping(torch.nn.Module):
         Outputs:
             out: (B, self.out_channels)
         """
-        #out = [x]
         out = []
         for freq in self.freq_bands:
             for func in self.funcs:

@@ -56,7 +56,6 @@ def save_heatmap_of_reprojection_error(height, width, pts2d, track_err, smooth=2
     cbar.set_label("Reprojection error across AOI (pixel units)", rotation=270, labelpad=25)
     if plot:
         plt.show()
-        # plt.savefig(img_path, bbox_inches="tight")
     else:
         return track_err_interp
 
@@ -107,10 +106,6 @@ def check_depth_supervision_points(run_id, logs_dir, output_dir, root_dir=None, 
     with open('{}/opts.json'.format(os.path.join(logs_dir, run_id)), 'r') as f:
         args = argparse.Namespace(**json.load(f))
 
-    #args.root_dir = "/mnt/cdisk/roger/Datasets" + args.root_dir.split("Datasets")[-1]
-    #args.img_dir = "/mnt/cdisk/roger/Datasets" + args.img_dir.split("Datasets")[-1]
-    #args.cache_dir = "/mnt/cdisk/roger/Datasets" + args.cache_dir.split("Datasets")[-1]
-    #args.gt_dir = "/mnt/cdisk/roger/Datasets" + args.gt_dir.split("Datasets")[-1]
 
     if gt_dir is not None:
         assert os.path.isdir(gt_dir)

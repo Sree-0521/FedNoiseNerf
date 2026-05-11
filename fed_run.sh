@@ -4,10 +4,6 @@ echo "Starting server"
 python3 server.py &
 sleep 3 # Sleep for 3s to give the server enough time to start
 echo "started server, moving to client"
-# for i in `seq 0 1`; do
-#     echo "Starting client $i"
-#     python client.py &
-# done
 
 for i in `seq 0 1`; do
     echo "Starting client $i"
@@ -35,9 +31,7 @@ done
 #                     --ckpts_dir /home/myid/kg23166/adcs/satnerf/checkpoints &
 
 
-# This will allow you to use CTRL+C to stop all background processes
 trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM
-# Wait for all background processes to complete
 wait
 
 

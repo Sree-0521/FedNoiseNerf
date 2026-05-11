@@ -59,16 +59,11 @@ def read_DFC2019_lonlat_aoi(aoi_id, dfc_dir):
     return lonlat_bbx
 
 
-#######################################################################################
-#######################################################################################
 # script starts here
 
 def select_pairs(root_dir, n_pairs=1):
 
     # load paths of the json files in the training split
-    #with open(os.path.join(root_dir, "val.txt"), "r") as f:
-    #    json_files = f.read().split("\n")
-    #json_paths = [os.path.join(root_dir, bn) for bn in json_files]
     json_paths = glob.glob(os.path.join(root_dir, "*.json"))
     n_train = len(json_paths)
 
@@ -209,10 +204,8 @@ def project_cloud_into_utm_grid(xyz, bb, definition, mode, mask=None):
         
         dsm_z = []
         if mode == 'avg':
-            #dsm_heights = [np.mean(cloud_heights[coords_indices == i]) for i in np.arange(coords_unique.shape[0])]
             dsm_z = [np.mean(np.array(list(g))[:,1]) for k, g in groups_id_z]
         else:
-            #dsm_z = [np.median(cloud_heights[coords_indices == i]) for i in np.arange(coords_unique.shape[0])] # (~180s/dsm)
             dsm_z = [np.median(np.array(list(g))[:,1]) for k, g in groups_id_z] #(~10s/dsm)
             
         map_np[coords_unique[:,1], coords_unique[:,0]] = np.array(dsm_z)
@@ -291,7 +284,6 @@ def eval_s2p(aoi_id, root_dir, dfc_dir, output_dir=".", n_pairs=1, resolution=0.
     # define projwin for gdal translate
     ulx, uly, lrx, lry = xoff, yoff + ysize * resolution_, xoff + xsize * resolution_, yoff
     bb = [ulx, lrx, lry, uly]
-    #bb = [np.min(xyz[:, 0]), np.max(xyz[:, 0]), np.min(xyz[:, 1]), np.max(xyz[:, 1])]
     med_dsm = project_cloud_into_utm_grid(xyz, bb, resolution, 'med', mask=None)
     profile["height"] = med_dsm.shape[0]
     profile["width"] = med_dsm.shape[1]

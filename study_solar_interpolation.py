@@ -80,7 +80,6 @@ def hstack_dsm_tifs_v1(img_paths, cmap=cv2.COLORMAP_VIRIDIS, crop=True, vmax=Non
             img = img[row_start:row_end, col_start:col_end, 0]
         x = img
         from scipy import interpolate
-        #x = np.nan_to_num(x) # change nan to 0
         x = quickly_interpolate_nans_from_singlechannel_img(x)
         mi = np.min(x) if vmin is None else vmin
         ma = np.max(x) if vmax is None else vmax
@@ -120,10 +119,6 @@ def sun_interp(run_id, logs_dir, output_dir, epoch_number, checkpoints_dir=None,
     with open('{}/opts.json'.format(os.path.join(logs_dir, run_id)), 'r') as f:
         args = argparse.Namespace(**json.load(f))
 
-    #args.root_dir = "/mnt/cdisk/roger/Datasets" + args.root_dir.split("Datasets")[-1]
-    #args.img_dir = "/mnt/cdisk/roger/Datasets" + args.img_dir.split("Datasets")[-1]
-    #args.cache_dir = "/mnt/cdisk/roger/Datasets" + args.cache_dir.split("Datasets")[-1]
-    #args.gt_dir = "/mnt/cdisk/roger/Datasets" + args.gt_dir.split("Datasets")[-1]
 
     if gt_dir is not None:
         assert os.path.isdir(gt_dir)

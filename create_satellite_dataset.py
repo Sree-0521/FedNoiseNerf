@@ -55,7 +55,6 @@ def run_ba(img_dir, output_dir):
     sys.stdout = log_file
     sys.stderr = log_file
     # run bundle adjustment
-    #tracks_config = {'FT_reset': True, 'FT_sift_detection': 's2p', 'FT_sift_matching': 'epipolar_based', "FT_K": 300}
     tracks_config = {'FT_reset': False, 'FT_save': True, 'FT_sift_detection': 's2p', 'FT_sift_matching': 'epipolar_based'}
     ba_extra = {"cam_model": "rpc"}
     ba_pipeline = BundleAdjustmentPipeline(ba_input_data, tracks_config=tracks_config, extra_ba_config=ba_extra)
@@ -126,7 +125,6 @@ def create_dataset_from_DFC2019_data(aoi_id, img_dir, dfc_dir, output_dir, use_b
             # use corrected rpc
             rpc_path = os.path.join(output_dir, "ba_files/rpcs_adj/{}.rpc_adj".format(get_file_id(rgb_p)))
             d["rpc"] = rpcm.rpc_from_rpc_file(rpc_path).__dict__
-            #d_out["rpc"] = rpc_rpcm_to_geotiff_format(rpc.__dict__)
 
             # additional fields for depth supervision
             ba_kps_pts3d_path = os.path.join(output_dir, "ba_files/ba_params/pts3d.npy")
